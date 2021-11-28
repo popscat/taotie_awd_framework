@@ -1,4 +1,4 @@
-from lib import flag,webshell,monitor,log,config,attack
+from lib import flag,webshell,monitor,log,config,attack,request
 
 from threading import Thread
 from multiprocessing import Queue 
@@ -7,22 +7,21 @@ from multiprocessing import Queue
 
 #引入消息队列
 flag_queue = Queue()
-webshell_queue = Queue()
+webshells = []
 exploits = {}
 
-
+tasks = []
 #flag提交线程
-task1 = Thread(target = flag.submit,args=(flag_queue))
+tasks.append(Thread(target=flag.submit,args=(flag_queue,)))
 
 #webshell权限维持线程
-task2 = Thread(target = webshell.maintain,args=(webshell_queue,))
+tasks.append(Thread(target=webshell.maintain,args=(webshells,)))
 
 #获取webshell、flag线程
-task3 = Thread(target = attack.run,args=())
+tasks.append(Thread(target=attack.run,args=()))
 
 #加载新的攻击方法
-task4 = Thread(target= monitor.init,args = exploits)
+tasks.append(Thread(target=monitor.init,args=(exploits,)))
 if __name__ == '__main__':
-    task1.start()
-    task2.start()
-    task3.start()
+    for task in tasks:
+        task.start()

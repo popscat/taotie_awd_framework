@@ -1,2 +1,3 @@
 pyyaml
 requests
+#pycryptodome  内置的webshell需要这个来解密
