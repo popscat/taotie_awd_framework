@@ -10,4 +10,4 @@ def submit(flag_queue,log,cfg):
         cfg['flag']['submit']['params']['flag'] = flag
         rst = request.request(**cfg['flag']['submit']).text
         if cfg['flag']['success'] not in rst:
-            log.info('{}提交失败'.format(flag))
+            log.warning('{}提交失败'.format(flag))

@@ -1,9 +1,9 @@
-import os,time
-
+import os,time,sys
 
 def init(exploits : dict ,log):
     def deal(path):  #加载指定文件的攻击类
-        l = path[:-3].split('/')
+        separator = '\\' if sys.platform.startswith('win') else '/'
+        l = path[:-3].split(separator)
         #attack/web1/a.py  attack.web1.a
         return eval('__import__("{}").{}.{}()'.format('.'.join(l),'.'.join(l[1:]),l[-1]))
     loaded_attack = {}

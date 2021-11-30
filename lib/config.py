@@ -8,7 +8,7 @@ def get_config():
         "roundtime":600,  #每轮间隔的时间，单位：秒
         "flag":{   #submit 直接传入request函数提交flag
             "submit":{
-                "url":"http://47.93.116.52:24443",
+                "url":"http://47.93.116.52:20006/flag.php",
                 "method":"GET",
                 "headers":{
                     "cookie":"a=b",

