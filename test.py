@@ -2,7 +2,7 @@ import yaml
 
 cfg = {
     "roundtime":600,  #每轮间隔的时间，单位：秒
-    "flag":{
+    "flag":{   #submit 直接传入request函数提交flag
         "submit":{
             "method":"POST",
             "header":{
@@ -21,7 +21,7 @@ cfg = {
 
         }
     },
-    "webshell":{
+    "webshell":{   #
         "shell":[
             [
                 '/var/www/html/.pops.php',

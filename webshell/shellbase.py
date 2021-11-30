@@ -25,7 +25,8 @@ class SystemShellBase():
     pass
 
     def getflag(self):
-        text = self.run('echo "pops[";cat /flag;echo "]"')
+        text = self.run(r'echo pops\[`cat /flag`\]')
+        print(text)
         return re.search('pops\[(.*?)\]',text).group(1)
 
     def write(self,path,content):

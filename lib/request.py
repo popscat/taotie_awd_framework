@@ -1,4 +1,5 @@
 import requests
+from lib.logger import log
 def get(**args):
     try:
         return requests.get(timeout=3,**args)
@@ -11,7 +12,7 @@ def post(**args):
     except requests.Timeout:
         log.debug('Http requests to {} Timeout'.format(args['url']))
 
-def get(**args):
+def request(**args):
     try:
         return requests.request(timeout=3,**args)
     except requests.Timeout:

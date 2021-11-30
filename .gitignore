@@ -1,2 +1,4 @@
-.vscode/
+.vscode
 result/
+.DS_Store
+__pycache__
